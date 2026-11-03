@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090b12">
+  <title>مكتبة الفيديوهات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="/Home"><span class="brand-mark">▶</span><span>VIDORA</span></a>
+    <nav><a href="/Home" class="nav-link" id="homeNav">الرئيسية</a><a href="/Admin" class="nav-admin">لوحة الإدارة <span>↗</span></a></nav>
+  </header>
+
+  <main id="homePage" class="page hidden">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="live-dot"></span> مكتبتك المرئية</div>
+        <h1>شاهد ما تحب،<br><span>بالطريقة التي تستحقها.</span></h1>
+        <p>مجموعة الفيديوهات المنشورة، في مكان واحد وتجربة مشاهدة أنيقة.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="hero-ring"></div><div class="hero-play">▶</div><div class="hero-chip chip-a">4K EXPERIENCE</div><div class="hero-chip chip-b">YOUR LIBRARY</div></div>
+    </section>
+    <section class="library-section">
+      <div class="section-heading"><div><span class="section-kicker">EXPLORE</span><h2>استكشف الفيديوهات</h2></div><span id="videoCount" class="count-pill">0 فيديو</span></div>
+      <div id="videoGrid" class="video-grid"></div>
+      <div id="homeState" class="state-card"><div class="state-icon">▣</div><h3>جاري تحميل المكتبة</h3><p>لحظات ونجهز لك الفيديوهات.</p></div>
+    </section>
+  </main>
+
+  <main id="watchPage" class="page hidden">
+    <a class="back-link" href="/Home">→ العودة إلى المكتبة</a>
+    <section class="watch-layout">
+      <div class="player-shell">
+        <video id="videoPlayer" controls playsinline preload="metadata"></video>
+        <div class="player-caption"><span class="player-live"></span> NOW PLAYING</div>
+      </div>
+      <div class="watch-info"><span class="section-kicker">VIDEO DETAILS</span><h1 id="watchTitle">عنوان الفيديو</h1><p id="watchDescription"></p></div>
+    </section>
+  </main>
+
+  <main id="adminPage" class="page hidden">
+    <section id="loginView" class="login-wrap">
+      <div class="login-card">
+        <div class="login-icon">✦</div><span class="section-kicker">PRIVATE ACCESS</span>
+        <h1>مرحباً بعودتك</h1><p class="muted">سجّل الدخول لإدارة مكتبة الفيديوهات.</p>
+        <form id="loginForm">
+          <label>رمز الإدارة<input id="adminCode" type="text" autocomplete="off" required placeholder="أدخل الرمز"></label>
+          <label>كلمة المرور<input id="adminPassword" type="password" autocomplete="current-password" required placeholder="أدخل كلمة المرور"></label>
+          <button class="primary-btn full-btn" type="submit">تسجيل الدخول <span>←</span></button>
+          <p id="loginError" class="form-error"></p>
+        </form>
+        <div class="secure-note"><span>●</span> اتصال محمي بلوحة الإدارة</div>
+      </div>
+    </section>
+
+    <section id="dashboardView" class="dashboard hidden">
+      <div class="dashboard-head"><div><span class="section-kicker">CONTROL CENTER</span><h1>لوحة الإدارة</h1><p class="muted">إدارة المحتوى المنشور في مكتبتك.</p></div><button id="logoutBtn" class="ghost-btn">تسجيل الخروج ↗</button></div>
+      <div class="stats-row"><div class="stat-card"><span>إجمالي الفيديوهات</span><strong id="totalStat">0</strong></div><div class="stat-card"><span>منشورة</span><strong id="publishedStat">0</strong></div><div class="stat-card"><span>مسودات</span><strong id="draftStat">0</strong></div></div>
+      <div class="admin-content-head"><div><h2>الفيديوهات</h2><p class="muted">أضف وعدّل واحذف محتوى المكتبة.</p></div><button id="addVideoBtn" class="primary-btn">＋ إضافة فيديو جديد</button></div>
+      <div id="adminVideoList" class="admin-video-list"></div>
+      <div id="adminState" class="state-card hidden"><div class="state-icon">▣</div><h3>لا توجد فيديوهات بعد</h3><p>أضف أول فيديو إلى مكتبتك.</p></div>
+    </section>
+  </main>
+
+  <div id="videoModal" class="modal hidden">
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-card">
+      <div class="modal-head"><div><span class="section-kicker">CONTENT EDITOR</span><h2 id="modalTitle">إضافة فيديو</h2></div><button id="closeModal" class="icon-btn" aria-label="إغلاق">×</button></div>
+      <form id="videoForm">
+        <input id="editId" type="hidden">
+        <label>عنوان الفيديو<input id="videoTitle" required maxlength="120" placeholder="مثال: Halloween Event"></label>
+        <label>ملف الفيديو<input id="videoFile" type="file" accept="video/*"><small class="file-hint" id="videoFileHint">اختر فيديو من جهازك (حتى 1GB). عند التعديل اتركه فارغاً للاحتفاظ بالفيديو الحالي.</small></label>
+        <label>الصورة المصغرة<input id="thumbnailFile" type="file" accept="image/*"><small class="file-hint" id="thumbnailFileHint">اختر صورة مصغرة من جهازك.</small></label>
+        <label>الوصف<textarea id="videoDescription" rows="3" placeholder="اكتب وصفاً مختصراً للفيديو..."></textarea></label>
+        <label class="toggle-row"><span><strong>نشر الفيديو</strong><small>إذا أوقفت النشر سيظهر كمسودة للأدمن فقط.</small></span><input id="videoPublished" type="checkbox" checked><i></i></label>
+        <p id="videoFormError" class="form-error"></p>
+        <div class="modal-actions"><button type="button" id="cancelModal" class="ghost-btn">إلغاء</button><button type="submit" class="primary-btn" id="saveVideoBtn">حفظ الفيديو</button></div>
+      </form>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
