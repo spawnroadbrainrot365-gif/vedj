@@ -36,7 +36,7 @@ const upload = multer({
   }
 });
 
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "999999mb" }));
 app.use(express.static(__dirname));
 app.use("/uploads", express.static(UPLOAD_DIR, { acceptRanges: true, maxAge: "1d" }));
 
